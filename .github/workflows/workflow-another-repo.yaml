@@ -9,6 +9,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: wlroh/file-generator
+
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
       
       - name: Set up JDK 11
         uses: actions/setup-java@v3
@@ -20,6 +24,14 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
+
+      - name: Move jar file
+        run: |
+          cp ${{ github.workspace }}/build/libs/file-generator-1.0.jar ${{ github.workspace }}
+
+      - name: Generate File
+        run: |
+          java -jar ${{ github.workspace }}/file-generator-1.0.jar
 
       - name: List files in the repository
         run: |
